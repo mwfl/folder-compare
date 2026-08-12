@@ -1,0 +1,3 @@
+#include "resource.h"
+
+IDI_FOLDER_COMPARE ICON "app-icon.ico"

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(folder_compare VERSION 0.1.0 LANGUAGES CXX)
+project(folder_compare VERSION 0.1.1 LANGUAGES CXX)
 
 include(FetchContent)
 option(FOLDER_COMPARE_USE_LOCAL_MWFL "Use a local mwfl checkout" OFF)
@@ -9,11 +9,13 @@ set(MWFL_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 if(FOLDER_COMPARE_USE_LOCAL_MWFL)
     add_subdirectory("${FOLDER_COMPARE_MWFL_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/mwfl")
 else()
-    FetchContent_Declare(mwfl GIT_REPOSITORY https://github.com/mwfl/mwfl.git GIT_TAG v0.1.0)
+    FetchContent_Declare(mwfl GIT_REPOSITORY https://github.com/mwfl/mwfl.git GIT_TAG v0.1.2)
     FetchContent_MakeAvailable(mwfl)
 endif()
 
-add_executable(folder-compare WIN32 main.cpp compare_model.cpp compare_model.h app.manifest)
+add_executable(folder-compare WIN32
+    main.cpp compare_model.cpp compare_model.h
+    folder_compare.rc resource.h app-icon.ico app.manifest)
 target_link_libraries(folder-compare PRIVATE mwfl::mwfl shlwapi)
 target_compile_features(folder-compare PRIVATE cxx_std_20)
 target_compile_definitions(folder-compare PRIVATE UNICODE _UNICODE WIN32_LEAN_AND_MEAN NOMINMAX)

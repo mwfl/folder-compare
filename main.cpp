@@ -1,6 +1,7 @@
 #include <mwfl/mwfl.h>
 
 #include "compare_model.h"
+#include "resource.h"
 
 #include <windowsx.h>
 
@@ -184,7 +185,7 @@ public:
                       .Add(results_, mwfl::Stretch())
                       .Add(status_, mwfl::Auto()));
         UpdateControls(false, false);
-        mwfl::ApplyWindowAppearance(GetHwnd());
+        SetAppearance({});
 
         if (!g_self_test && !g_showcase) {
             mwfl::SavedWindowPlacement saved;
@@ -297,10 +298,6 @@ public:
         }
         if (event.id == WM_KEYDOWN && event.wparam == VK_F5) {
             StartComparison();
-            return mwfl::EventResult::Handled();
-        }
-        if (event.id == WM_THEMECHANGED || event.id == WM_SETTINGCHANGE) {
-            mwfl::ApplyWindowAppearance(GetHwnd());
             return mwfl::EventResult::Handled();
         }
         if (event.id == kSelfTestFailed) {
@@ -563,9 +560,12 @@ private:
 int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR, int show) {
     g_self_test = wcsstr(::GetCommandLineW(), L"--self-test") != nullptr;
     g_showcase = wcsstr(::GetCommandLineW(), L"--showcase") != nullptr;
+    const HICON icon = ::LoadIconW(instance, MAKEINTRESOURCEW(IDI_FOLDER_COMPARE));
     return mwfl::RunApplication<CompareWindow>(
         instance, show,
         {.title = L"MWFL Compare",
          .initial_bounds = {{30.0_dip, 30.0_dip}, {1280.0_dip, 780.0_dip}},
-         .use_default_bounds = false});
+         .use_default_bounds = false,
+         .icon = icon,
+         .small_icon = icon});
 }
