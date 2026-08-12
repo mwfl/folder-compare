@@ -25,7 +25,7 @@ cmake --build --preset vs2026-x64-release
 ctest --preset vs2026-x64-release
 ```
 
-Visual Studio 2022 is supported through `vs2022-x64`. A standalone build fetches the pinned mwfl v0.1.0 source; the VS 2026 preset uses a neighboring checkout for development.
+Visual Studio 2022 is supported through `vs2022-x64`. A standalone build fetches the pinned mwfl v0.1.2 source; the VS 2026 preset uses a neighboring checkout for development.
 
 Use `folder-compare.exe --showcase` for a populated disposable demonstration.
 

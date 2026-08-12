@@ -13,6 +13,7 @@ namespace compare_tool {
 
 enum class Status { same, different, left_only, right_only, type_conflict, error };
 
+// Paths remain relative to both roots, giving the UI one stable row identity.
 struct Entry {
     std::filesystem::path relative_path;
     Status status = Status::same;
@@ -41,6 +42,8 @@ struct FolderResult {
 
 using Progress = std::function<void(std::size_t scanned, std::wstring_view current)>;
 
+// Synchronous filesystem work intended for a worker thread. Progress runs on
+// that same thread; cancellation returns the useful partial result collected.
 FolderResult CompareFolders(const std::filesystem::path& left,
                             const std::filesystem::path& right,
                             const FolderOptions& options,
@@ -66,10 +69,13 @@ struct TextDiff {
     std::wstring error;
 };
 
+// Bounds both input reads; oversized or binary content is reported, not decoded.
 TextDiff CompareTextFiles(const std::filesystem::path& left,
                           const std::filesystem::path& right,
                           std::size_t maximum_bytes = 32 * 1024 * 1024);
 
+// Copies through a sibling temporary file and verifies bytes before replacement.
+// Links and directories are never followed as files.
 bool CopyEntryVerified(const std::filesystem::path& source_root,
                        const std::filesystem::path& destination_root,
                        const Entry& entry, std::wstring& error) noexcept;
