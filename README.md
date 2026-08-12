@@ -29,6 +29,10 @@ Visual Studio 2022 is supported through `vs2022-x64`. A standalone build fetches
 
 Use `folder-compare.exe --showcase` for a populated disposable demonstration.
 
+## Download
+
+Download the versioned `windows-x64-portable.zip` from [GitHub Releases](https://github.com/mwfl/folder-compare/releases), verify it with the accompanying SHA-256 file, and extract it anywhere. No installer or additional runtime is required on a supported Windows system.
+
 ## Safety boundaries
 
 Folder Compare does not perform automatic synchronization. A copy direction must be selected explicitly and confirmed. It does not claim three-way merge, Git integration, durable undo history, or implicit symlink traversal.
