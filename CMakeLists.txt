@@ -14,11 +14,11 @@ else()
 endif()
 
 add_executable(folder-compare WIN32
-    main.cpp compare_model.cpp compare_model.h
+    main.cpp update_checker.cpp update_checker.h compare_model.cpp compare_model.h
     folder_compare.rc resource.h app-icon.ico app.manifest)
-target_link_libraries(folder-compare PRIVATE mwfl::ui shlwapi)
+target_link_libraries(folder-compare PRIVATE mwfl::ui shlwapi winhttp comctl32 advapi32 shell32)
 target_compile_features(folder-compare PRIVATE cxx_std_20)
-target_compile_definitions(folder-compare PRIVATE UNICODE _UNICODE WIN32_LEAN_AND_MEAN NOMINMAX)
+target_compile_definitions(folder-compare PRIVATE UNICODE _UNICODE WIN32_LEAN_AND_MEAN NOMINMAX MWFL_APP_VERSION=L\"${PROJECT_VERSION}\")
 if(MSVC)
     target_compile_options(folder-compare PRIVATE /W4 /WX /permissive- /EHsc /utf-8)
 endif()

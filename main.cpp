@@ -2,6 +2,7 @@
 
 #include "compare_model.h"
 #include "resource.h"
+#include "update_checker.h"
 
 #include <windowsx.h>
 
@@ -19,6 +20,8 @@
 using mwfl::operator""_dip;
 
 namespace {
+
+mwfl_examples::UpdateChecker g_update_checker;
 
 constexpr mwfl::ControlId kBrowseLeft{1800};
 constexpr mwfl::ControlId kBrowseRight{1801};
@@ -193,6 +196,10 @@ public:
                                                       L"WindowPlacement", saved))
                 mwfl::RestoreWindowPlacement(GetHwnd(), saved);
         }
+        g_update_checker.Attach(
+            GetHwnd(), {L"Folder Compare", L"folder-compare", MWFL_APP_VERSION,
+                        L"Software\\mwfl\\Examples\\CompareTool\\Updates"},
+            !g_self_test && !g_showcase);
         if (g_self_test || g_showcase) SetupSelfTest();
     }
 
