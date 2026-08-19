@@ -9,14 +9,13 @@ set(MWFL_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 if(FOLDER_COMPARE_USE_LOCAL_MWFL)
     add_subdirectory("${FOLDER_COMPARE_MWFL_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/mwfl")
 else()
-    FetchContent_Declare(mwfl GIT_REPOSITORY https://github.com/mwfl/mwfl.git GIT_TAG v0.2.0)
+    FetchContent_Declare(mwfl GIT_REPOSITORY https://github.com/mwfl/mwfl.git GIT_TAG v0.2.1)
     FetchContent_MakeAvailable(mwfl)
 endif()
-
 add_executable(folder-compare WIN32
-    main.cpp update_checker.cpp update_checker.h compare_model.cpp compare_model.h
+    main.cpp compare_model.cpp compare_model.h
     folder_compare.rc resource.h app-icon.ico app.manifest)
-target_link_libraries(folder-compare PRIVATE mwfl::ui shlwapi winhttp comctl32 advapi32 shell32)
+target_link_libraries(folder-compare PRIVATE mwfl::app shlwapi)
 target_compile_features(folder-compare PRIVATE cxx_std_20)
 target_compile_definitions(folder-compare PRIVATE UNICODE _UNICODE WIN32_LEAN_AND_MEAN NOMINMAX MWFL_APP_VERSION=L\"${PROJECT_VERSION}\")
 if(MSVC)
