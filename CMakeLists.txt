@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(folder_compare VERSION 0.1.1 LANGUAGES CXX)
+project(folder_compare VERSION 0.1.0 LANGUAGES CXX)
 
 include(FetchContent)
 option(FOLDER_COMPARE_USE_LOCAL_MWFL "Use a local mwfl checkout" OFF)
